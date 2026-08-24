@@ -1,239 +1,684 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Main Site</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --chalk:#FAF9F5;
-    --card:#FFFFFF;
-    --ink:#17241F;
-    --ink-soft:#4A5A52;
-    --sage:#8B9A91;
-    --line:#EAE6DC;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Site</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --chalk: #FAF9F5;
+      --card: #FFFFFF;
+      --ink: #17241F;
+      --ink-soft: #4A5A52;
+      --sage: #8B9A91;
+      --line: #EAE6DC;
 
-    --emerald:#0E8A6D;   --emerald-deep:#0A6B54;  --emerald-tint:#E6F5F0;
-    --coral:#FF6B5B;     --coral-deep:#C1432F;    --coral-tint:#FFEAE6;
-    --amber:#E8A33D;     --amber-deep:#8A5F17;    --amber-tint:#FDF1DD;
-    --iris:#7B6EF6;      --iris-deep:#5347C9;     --iris-tint:#EFEDFE;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;background:var(--chalk);color:var(--ink);
-    font-family:'Inter',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;
-  }
-  a{color:inherit;text-decoration:none;}
-  h1,h2,h3{font-family:'Sora',sans-serif;margin:0;letter-spacing:-.01em;}
-  .mono{font-family:'IBM Plex Mono',monospace;}
-  ::selection{background:var(--emerald);color:#fff;}
-  img,svg{display:block;}
+      --emerald: #0E8A6D;
+      --emerald-deep: #0A6B54;
+      --emerald-tint: #E6F5F0;
+      --coral: #FF6B5B;
+      --coral-deep: #C1432F;
+      --coral-tint: #FFEAE6;
+      --amber: #E8A33D;
+      --amber-deep: #8A5F17;
+      --amber-tint: #FDF1DD;
+      --iris: #7B6EF6;
+      --iris-deep: #5347C9;
+      --iris-tint: #EFEDFE;
+    }
 
-  .capsule{
-    display:inline-flex;align-items:center;gap:7px;
-    padding:5px 13px;border-radius:999px;
-    font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.03em;
-  }
-  .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+    * {
+      box-sizing: border-box;
+    }
 
-  .band{width:100%;}
-  .container{max-width:860px;margin:0 auto;padding:0 24px;}
+    html {
+      scroll-behavior: smooth;
+    }
 
-  /* ===== Nav ===== */
-  nav{position:sticky;top:0;z-index:50;background:rgba(250,249,245,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
-  .nav-inner{max-width:860px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
-  .brand{display:flex;align-items:center;gap:10px;}
-  .pill-mark{width:30px;height:30px;flex-shrink:0;}
-  .brand-name{font-family:'Sora',sans-serif;font-weight:700;font-size:15.5px;}
-  .nav-links{display:flex;gap:22px;font-size:13px;font-weight:500;color:var(--ink-soft);}
-  .nav-links a:hover{color:var(--emerald-deep);}
+    body {
+      margin: 0;
+      background: var(--chalk);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
 
-  /* ===== Hero: full-bleed gradient ===== */
-  .hero-band{
-    background:linear-gradient(120deg,#0A6B54 0%, #0E8A6D 42%, #5347C9 100%);
-    position:relative;overflow:hidden;padding:60px 0 46px;
-  }
-  .hero-pills{position:absolute;top:-40px;right:-50px;width:380px;height:380px;opacity:.5;pointer-events:none;}
-  .hero-pills.two{top:auto;bottom:-90px;left:-90px;right:auto;width:280px;height:280px;opacity:.35;}
-  .hero-eyebrow .capsule{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.25);}
-  .hero-eyebrow .dot{background:#fff;animation:pulse 2.4s ease-in-out infinite;}
-  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
-  @media (prefers-reduced-motion:reduce){.hero-eyebrow .dot{animation:none;}}
-  .hero-band h1{
-    margin-top:20px;color:#fff;font-size:clamp(30px,4.8vw,46px);font-weight:800;line-height:1.1;
-    max-width:13ch;position:relative;z-index:1;
-  }
-  .hero-band p.lede{margin-top:14px;color:rgba(255,255,255,.86);font-size:16px;max-width:48ch;position:relative;z-index:1;}
-  .hero-meta{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1;}
-  .hero-meta .capsule{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.22);}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-  /* ===== Legend ===== */
-  .legend-band{background:var(--card);border-bottom:1px solid var(--line);}
-  .legend-row{display:flex;align-items:center;flex-wrap: wrap;gap: 12px;padding: 16px 24px;}
-  .legend-item{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-soft);}
-  .legend-item .dot{width:8px;height:8px;}
+    h1,
+    h2,
+    h3 {
+      font-family: 'Sora', sans-serif;
+      margin: 0;
+      letter-spacing: -.01em;
+    }
 
-  /* ===== Section heads ===== */
-  .section-head{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 18px;gap:10px;flex-wrap:wrap;}
-  .section-head h2{font-size:19px;font-weight:700;}
-  .section-head .count{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--sage);}
-  section{padding:48px 0;}
+    .mono {
+      font-family: 'IBM Plex Mono', monospace;
+    }
 
-  /* ===== Builder note ===== */
-  .builder-note{
-    border:1.5px dashed var(--iris);background:var(--iris-tint);border-radius:14px;
-    padding:14px 18px;font-size:12.5px;color:var(--iris-deep);line-height:1.6;margin-bottom:22px;
-  }
-  .builder-note strong{color:var(--ink);}
-  .builder-note code{background:#fff;border:1px solid #E1DEFB;padding:1px 6px;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;}
+    ::selection {
+      background: var(--emerald);
+      color: #fff;
+    }
 
-  /* ===== Posts ===== */
-  .post{
-    background:var(--card);border:1px solid var(--line);border-radius:16px;
-    padding:20px 22px;margin-bottom:14px;border-left:4px solid transparent;
-    opacity:0;transform:translateY(8px);animation:rise .5s ease forwards;
-  }
-  @keyframes rise{to{opacity:1;transform:translateY(0);}}
-  @media (prefers-reduced-motion:reduce){.post{animation:none;opacity:1;transform:none;}}
-  .post.type-update{border-left-color:var(--emerald);}
-  .post.type-urgent{border-left-color:var(--coral); background:linear-gradient(180deg,var(--coral-tint) 0%, #fff 60px);}
-  .post.type-event{border-left-color:var(--amber);}
-  .post-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
-  .post-tags{display:flex;gap:8px;align-items:center;}
-  .chip-update{background:var(--emerald-tint);color:var(--emerald-deep);}
-  .chip-update .dot{background:var(--emerald);}
-  .chip-urgent{background:var(--coral-tint);color:var(--coral-deep);}
-  .chip-urgent .dot{background:var(--coral);}
-  .chip-event{background:var(--amber-tint);color:var(--amber-deep);}
-  .chip-event .dot{background:var(--amber);}
-  .pin{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--sage);}
-  .post-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--sage);}
-  .post h3{font-size:16.5px;font-weight:700;margin-bottom:6px;}
-  .post p{font-size:14px;color:var(--ink-soft);margin:0;}
+    img,
+    svg {
+      display: block;
+    }
 
-  /* ===== Tip callout ===== */
-  .tip{
-    background:var(--amber-tint);border:1px solid #F3DFB2;border-radius:16px;
-    padding:18px 20px;display:flex;gap:14px;align-items:flex-start;margin-bottom:14px;
-  }
-  .tip .icon{width:30px;height:30px;border-radius:9px;background:var(--amber);color:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:700;font-size:15px;}
-  .tip h3{font-size:14.5px;font-weight:700;margin-bottom:4px;}
-  .tip p{margin:0;font-size:13px;color:var(--ink-soft);}
+    .capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 13px;
+      border-radius: 999px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .03em;
+    }
 
-  /* ===== Resources band ===== */
-  .resources-band{background:linear-gradient(180deg,var(--iris-tint) 0%, var(--chalk) 100%);}
-  .link-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-  .link-card{
-    display:flex;flex-direction:column;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:16px;
-    padding:18px 20px;transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-  }
-  .link-card:hover{transform:translateY(-3px);border-color:var(--iris);box-shadow:0 10px 24px -14px rgba(123,110,246,.4);}
-  .link-card:focus-visible{outline:2px solid var(--iris);outline-offset:2px;}
-  .link-top{display:flex;align-items:center;justify-content:space-between;}
-  .link-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .link-icon.c-iris{background:var(--iris-tint);color:var(--iris-deep);}
-  .link-icon.c-emerald{background:var(--emerald-tint);color:var(--emerald-deep);}
-  .link-icon.c-amber{background:var(--amber-tint);color:var(--amber-deep);}
-  .link-icon svg{width:17px;height:17px;}
-  .link-arrow{color:var(--sage);transition:transform .18s ease, color .18s ease;}
-  .link-card:hover .link-arrow{transform:translate(2px,-2px);color:var(--iris-deep);}
-  .link-card .name{font-weight:700;font-size:14.5px;}
-  .link-card .desc{font-size:12.5px;color:var(--sage);}
-  .link-card .desc.placeholder{color:var(--coral-deep);font-family:'IBM Plex Mono',monospace;font-size:11px;}
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
 
-  footer{background:var(--ink);color:rgba(255,255,255,.7);text-align:center;padding:26px 20px;font-family:'IBM Plex Mono',monospace;font-size:11px;}
-  footer strong{color:#fff;}
+    .band {
+      width: 100%;
+    }
 
-  @media(max-width:560px){
-    .link-grid{grid-template-columns:1fr;}
-    .hero-pills{width:240px;height:240px;}
-  }
-</style>
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== Nav ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(250, 249, 245, .88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill-mark {
+      width: 30px;
+      height: 30px;
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 15.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-soft);
+    }
+
+    .nav-links a:hover {
+      color: var(--emerald-deep);
+    }
+
+    /* ===== Hero: full-bleed gradient ===== */
+    .hero-band {
+      background: linear-gradient(120deg, #0A6B54 0%, #0E8A6D 42%, #5347C9 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 60px 0 46px;
+    }
+
+    .hero-pills {
+      position: absolute;
+      top: -40px;
+      right: -50px;
+      width: 380px;
+      height: 380px;
+      opacity: .5;
+      pointer-events: none;
+    }
+
+    .hero-pills.two {
+      top: auto;
+      bottom: -90px;
+      left: -90px;
+      right: auto;
+      width: 280px;
+      height: 280px;
+      opacity: .35;
+    }
+
+    .hero-eyebrow .capsule {
+      background: rgba(255, 255, 255, .16);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, .25);
+    }
+
+    .hero-eyebrow .dot {
+      background: #fff;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: .35;
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      .hero-eyebrow .dot {
+        animation: none;
+      }
+    }
+
+    .hero-band h1 {
+      margin-top: 20px;
+      color: #fff;
+      font-size: clamp(30px, 4.8vw, 46px);
+      font-weight: 800;
+      line-height: 1.1;
+      max-width: 13ch;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-band p.lede {
+      margin-top: 14px;
+      color: rgba(255, 255, 255, .86);
+      font-size: 16px;
+      max-width: 48ch;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-meta {
+      margin-top: 24px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-meta .capsule {
+      background: rgba(255, 255, 255, .14);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, .22);
+    }
+
+    /* ===== Legend ===== */
+    .legend-band {
+      background: var(--card);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 16px 24px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12.5px;
+      color: var(--ink-soft);
+    }
+
+    .legend-item .dot {
+      width: 8px;
+      height: 8px;
+    }
+
+    /* ===== Section heads ===== */
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin: 0 0 18px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .section-head h2 {
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .section-head .count {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11.5px;
+      color: var(--sage);
+    }
+
+    section {
+      padding: 48px 0;
+    }
+
+    /* ===== Builder note ===== */
+    .builder-note {
+      border: 1.5px dashed var(--iris);
+      background: var(--iris-tint);
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 12.5px;
+      color: var(--iris-deep);
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+
+    .builder-note strong {
+      color: var(--ink);
+    }
+
+    .builder-note code {
+      background: #fff;
+      border: 1px solid #E1DEFB;
+      padding: 1px 6px;
+      border-radius: 6px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11.5px;
+    }
+
+    /* ===== Posts ===== */
+    .post {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px 22px;
+      margin-bottom: 14px;
+      border-left: 4px solid transparent;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: rise .5s ease forwards;
+    }
+
+    @keyframes rise {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      .post {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .post.type-update {
+      border-left-color: var(--emerald);
+    }
+
+    .post.type-urgent {
+      border-left-color: var(--coral);
+      background: linear-gradient(180deg, var(--coral-tint) 0%, #fff 60px);
+    }
+
+    .post.type-event {
+      border-left-color: var(--amber);
+    }
+
+    .post-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .post-tags {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .chip-update {
+      background: var(--emerald-tint);
+      color: var(--emerald-deep);
+    }
+
+    .chip-update .dot {
+      background: var(--emerald);
+    }
+
+    .chip-urgent {
+      background: var(--coral-tint);
+      color: var(--coral-deep);
+    }
+
+    .chip-urgent .dot {
+      background: var(--coral);
+    }
+
+    .chip-event {
+      background: var(--amber-tint);
+      color: var(--amber-deep);
+    }
+
+    .chip-event .dot {
+      background: var(--amber);
+    }
+
+    .pin {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--sage);
+    }
+
+    .post-date {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--sage);
+    }
+
+    .post h3 {
+      font-size: 16.5px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .post p {
+      font-size: 14px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    /* ===== Tip callout ===== */
+    .tip {
+      background: var(--amber-tint);
+      border: 1px solid #F3DFB2;
+      border-radius: 16px;
+      padding: 18px 20px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .tip .icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      background: var(--amber);
+      color: #fff;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .tip h3 {
+      font-size: 14.5px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .tip p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--ink-soft);
+    }
+
+    /* ===== Resources band ===== */
+    .resources-band {
+      background: linear-gradient(180deg, var(--iris-tint) 0%, var(--chalk) 100%);
+    }
+
+    .link-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .link-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px 20px;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+
+    .link-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--iris);
+      box-shadow: 0 10px 24px -14px rgba(123, 110, 246, .4);
+    }
+
+    .link-card:focus-visible {
+      outline: 2px solid var(--iris);
+      outline-offset: 2px;
+    }
+
+    .link-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .link-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .link-icon.c-iris {
+      background: var(--iris-tint);
+      color: var(--iris-deep);
+    }
+
+    .link-icon.c-emerald {
+      background: var(--emerald-tint);
+      color: var(--emerald-deep);
+    }
+
+    .link-icon.c-amber {
+      background: var(--amber-tint);
+      color: var(--amber-deep);
+    }
+
+    .link-icon svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .link-arrow {
+      color: var(--sage);
+      transition: transform .18s ease, color .18s ease;
+    }
+
+    .link-card:hover .link-arrow {
+      transform: translate(2px, -2px);
+      color: var(--iris-deep);
+    }
+
+    .link-card .name {
+      font-weight: 700;
+      font-size: 14.5px;
+    }
+
+    .link-card .desc {
+      font-size: 12.5px;
+      color: var(--sage);
+    }
+
+    .link-card .desc.placeholder {
+      color: var(--coral-deep);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+    }
+
+    footer {
+      background: var(--ink);
+      color: rgba(255, 255, 255, .7);
+      text-align: center;
+      padding: 26px 20px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+    }
+
+    footer strong {
+      color: #fff;
+    }
+
+    @media(max-width:560px) {
+      .link-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-pills {
+        width: 240px;
+        height: 240px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- ================================================================
+  <!-- ================================================================
      NAV — edit the text "Pharmacy Board" to rename your page.
 ================================================================= -->
-<nav>
-  <div class="nav-inner">
-    <a href="https://zurlt.github.io/PHR-F25/" class="brand" style="text-decoration: none; color: inherit;">
-      <svg class="pill-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="3" y="9" width="26" height="14" rx="7" fill="#0E8A6D"/>
-        <path d="M16 9H22C25.866 9 29 12.134 29 16C29 19.866 25.866 23 22 23H16V9Z" fill="#7B6EF6"/>
-      </svg>
-      <span class="brand-name">Pharmacy Board</span>
-    </a>
-    <div class="nav-links">
-      <a href="#feed">Updates</a>
-      <a href="#resources">Resources</a>
+  <nav>
+    <div class="nav-inner">
+      <a href="https://zurlt.github.io/PHR-F25/" class="brand" style="text-decoration: none; color: inherit;">
+        <svg class="pill-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="9" width="26" height="14" rx="7" fill="#0E8A6D" />
+          <path d="M16 9H22C25.866 9 29 12.134 29 16C29 19.866 25.866 23 22 23H16V9Z" fill="#7B6EF6" />
+        </svg>
+        <span class="brand-name">Pharmacy Board</span>
+      </a>
+      <div class="nav-links">
+        <a href="#feed">Updates</a>
+        <a href="#resources">Resources</a>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<!-- ================================================================
+  <!-- ================================================================
      HERO — edit the headline, the sentence under it, and your name.
 ================================================================= -->
-<div class="band hero-band">
-  <svg class="hero-pills" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="170" y="10" width="130" height="54" rx="27" transform="rotate(28 170 10)" fill="#fff" opacity="0.18"/>
-    <rect x="140" y="120" width="150" height="58" rx="29" transform="rotate(-16 140 120)" fill="#fff" opacity="0.14"/>
-  </svg>
-  <svg class="hero-pills two" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="60" y="60" width="140" height="52" rx="26" transform="rotate(-30 60 60)" fill="#fff" opacity="0.16"/>
-  </svg>
-  <div class="container">
-    <div class="hero-eyebrow"><span class="capsule"><span class="dot"></span>LIVE BOARD</span></div>
-    <h1>Welcome back Pharmacist!</h1>
-    <p class="lede">Posted for the Pharmacy class of F25 — announcements, deadlines, and the links you keep needing to search for.</p>
-    <div class="hero-meta">
-      <span class="capsule">1 post active</span>
-      <span class="capsule">Last updated Aug 24</span>
+  <div class="band hero-band">
+    <svg class="hero-pills" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="170" y="10" width="130" height="54" rx="27" transform="rotate(28 170 10)" fill="#fff" opacity="0.18" />
+      <rect x="140" y="120" width="150" height="58" rx="29" transform="rotate(-16 140 120)" fill="#fff"
+        opacity="0.14" />
+    </svg>
+    <svg class="hero-pills two" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="60" y="60" width="140" height="52" rx="26" transform="rotate(-30 60 60)" fill="#fff" opacity="0.16" />
+    </svg>
+    <div class="container">
+      <div class="hero-eyebrow"><span class="capsule"><span class="dot"></span>LIVE BOARD</span></div>
+      <h1>Welcome back Pharmacist!</h1>
+      <p class="lede">Posted for the Pharmacy class of F25 — announcements, deadlines, and the links you keep needing to
+        search for.</p>
+      <div class="hero-meta">
+        <span class="capsule">1 post active</span>
+        <span class="capsule">Last updated Aug 24</span>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ================================================================
+  <!-- ================================================================
      LEGEND — explains what each color means. Edit labels if you
      rename the categories, otherwise leave as-is.
 ================================================================= -->
-<div class="band legend-band">
-  <div class="container legend-row">
-    <span class="legend-item"><span class="dot" style="background:var(--coral)"></span>Urgent — Needs direct attention</span>
-    <span class="legend-item"><span class="dot" style="background:var(--emerald)"></span>Update — General news</span>
-    <span class="legend-item"><span class="dot" style="background:var(--amber)"></span>Event — Something happening in/out of campus related</span>
+  <div class="band legend-band">
+    <div class="container legend-row">
+      <span class="legend-item"><span class="dot" style="background:var(--coral)"></span>Urgent — Needs direct
+        attention</span>
+      <span class="legend-item"><span class="dot" style="background:var(--emerald)"></span>Update — General news</span>
+      <span class="legend-item"><span class="dot" style="background:var(--amber)"></span>Event — Something happening
+        in/out of campus related</span>
+    </div>
   </div>
-</div>
 
-<div class="container">
+  <div class="container">
 
-  <!-- ================================================================
+    <!-- ================================================================
        FEED — this is your template area. Each post below is one
        copy‑paste block. To add a new post: copy everything between
        one pair of "COPY THIS BLOCK" comments, paste it above or below,
        then edit the tag, date, title and text. Newest goes on top.
   ================================================================= -->
-  <section id="feed">
-    <div class="section-head"><h2>Latest updates</h2><span class="count">Bulletin Board</span></div>
-
-    <!-- COPY THIS BLOCK — type: URGENT (coral) -->
-    <div class="post type-urgent">
-      <div class="post-top">
-        <div class="post-tags">
-          <span class="capsule chip-urgent"><span class="dot"></span>Urgent</span>
-          <span class="pin">📌 Pinned</span>
-        </div>
-        <span class="post-date">Aug 23</span>
+    <section id="feed">
+      <div class="section-head">
+        <h2>Latest updates</h2><span class="count">Bulletin Board</span>
       </div>
-      <h3>Registration for Fall 2026</h3>
-      <p>Per university timelines, registration for Fall 2026 is now aimed for August 30th 2026 with F25 window opening at 5:00 PM to 7:00 PM.</p>
-    </div>
-    <!-- END BLOCK -->
 
-         <!-- COPY THIS BLOCK — bonus type: TIP callout (small, no date/tag) -->
+      <!-- COPY THIS BLOCK — type: URGENT (coral) -->
+      <div class="post type-urgent">
+        <div class="post-top">
+          <div class="post-tags">
+            <span class="capsule chip-urgent"><span class="dot"></span>Urgent</span>
+            <span class="pin">📌 Pinned</span>
+          </div>
+          <span class="post-date">Aug 23</span>
+        </div>
+        <h3>Registration for Fall 2026</h3>
+        <p>Per university timelines, registration for Fall 2026 is now aimed for August 30th 2026 with F25 window
+          opening at 5:00 PM to 7:00 PM.</p>
+      </div>
+      <!-- END BLOCK -->
+
+      <!-- COPY THIS BLOCK — bonus type: TIP callout (small, no date/tag) -->
       <div class="tip">
         <span class="icon">i</span>
         <div>
@@ -243,106 +688,115 @@
       </div>
       <!-- END BLOCK -->
 
-  </section>
+    </section>
 
-  <!-- ================================================================
+    <!-- ================================================================
        RESOURCES — same idea: each tile is one copy‑paste block.
        Replace the href="#" with your real link, and edit the name
        and description. Pick c-emerald / c-iris / c-amber for the
        icon color — it's just for variety, doesn't mean anything.
   ================================================================= -->
-  <section id="resources">
-    <div class="section-head"><h2>Link Portal</h2><span class="count">2 Direct Links</span></div>
+    <section id="resources">
+      <div class="section-head">
+        <h2>Link Portal</h2><span class="count">2 Direct Links</span>
+      </div>
 
-    <div class="link-grid">
+      <div class="link-grid">
 
-      <!-- COPY THIS BLOCK -->
-      <a class="link-card" href=https://zurlt.github.io/PHR-F25/Flowchart>
-        <div class="link-top">
-          <span class="link-icon c-iris">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5V6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v13.5"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H19"/></svg>
-          </span>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="link-arrow"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        <!-- COPY THIS BLOCK -->
+        <a class="link-card" href=https://zurlt.github.io/PHR-F25/Flowchart>
+          <div class="link-top">
+            <span class="link-icon c-iris">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M4 19.5V6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v13.5" />
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H19" />
+              </svg>
+            </span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              class="link-arrow">
+              <path d="M7 17 17 7M9 7h8v8" />
+            </svg>
+          </div>
+          <span class="name">Flowchart</span>
+          Press to Redirect
+        </a>
+        <!-- END BLOCK -->
+
+        <!-- COPY THIS BLOCK -->
+        <a class="link-card" href="https://zurlt.github.io/PHR-F25/Credit%20Calculator">
+          <div class="link-top">
+            <span class="link-icon c-emerald">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3.5 2" />
+              </svg>
+            </span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              class="link-arrow">
+              <path d="M7 17 17 7M9 7h8v8" />
+            </svg>
+          </div>
+          <span class="name">Credit Calculator</span>
+          Press to Redirect
+        </a>
+         
+        <!-- END BLOCK -->
+
+          <a class="link-card" href="#">
+            <div class="link-top">
+              <span class="link-icon c-emerald">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+              </span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                class="link-arrow">
+                <path d="M7 17 17 7M9 7h8v8" />
+              </svg>
+            </div>
+            <span class="name">Coming soon...</span>
+            Press to Redirect
+          </a>
         </div>
-        <span class="name">Flowchart</span>
-        Press to Redirect
-      </a>
-      <!-- END BLOCK -->
-
-      <!-- COPY THIS BLOCK -->
-      <a class="link-card" href="https://zurlt.github.io/PHR-F25/Credit%20Calculator">
-        <div class="link-top">
-          <span class="link-icon c-emerald">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-          </span>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="link-arrow"><path d="M7 17 17 7M9 7h8v8"/></svg>
-        </div>
-        <span class="name">Credit Calculator</span>
-        Press to Redirect
-      </a>
-      <!-- END BLOCK -->
-
-      <!-- COPY THIS BLOCK -->
-      <a class="link-card" href="#">
-        <div class="link-top">
-          <span class="link-icon c-iris">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5V6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v13.5"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H19"/></svg>
-          </span>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="link-arrow"><path d="M7 17 17 7M9 7h8v8"/></svg>
-        </div>
-        <span class="name">Placeholder 2</span>
-      </a>
-      <!-- END BLOCK -->
-
-      <!-- COPY THIS BLOCK -->
-      <a class="link-card" href="#">
-        <div class="link-top">
-          <span class="link-icon c-emerald">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-          </span>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="link-arrow"><path d="M7 17 17 7M9 7h8v8"/></svg>
-        </div>
-        <span class="name">Placeholder 3</span>
-      </a>
-      <!-- END BLOCK -->      
-      
-
+      </section>
     </div>
-  </section>
-
-</div>
 
 
-<footer>Made for Pharmacy F25 Students - Questions must be directed to:
-<div class="contact-footer">
-    <span onclick="copyText('f251120@komar.edu.iq', this)"><strong>Email: F251120@KOMAR.EDU.IQ</strong></span>
-    <span onclick="copyText('+9647501123090', this)"><strong>Phone: +9647501123090</strong></span>
-  </div>
 
-  <style>
-    .contact-footer {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      padding: 20px;
-    }
-    .contact-footer span {
-      cursor: pointer;
-      user-select: none;
-    }
-  </style>
+  <footer>Made for Pharmacy F25 Students - Questions must be directed to:
+    <div class="contact-footer">
+      <span onclick="copyText('f251120@komar.edu.iq', this)"><strong>Email: F251120@KOMAR.EDU.IQ</strong></span>
+      <span onclick="copyText('+9647501123090', this)"><strong>Phone: +9647501123090</strong></span>
+    </div>
 
-  <script>
-    function copyText(text, element) {
-      navigator.clipboard.writeText(text);
-      const originalText = element.innerText;
-      element.innerText = "Copied!";
-      setTimeout(() => {
-        element.innerText = originalText;
-      }, 1500);
-    }
-  </script>
+    <style>
+      .contact-footer {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .contact-footer span {
+        cursor: pointer;
+        user-select: none;
+      }
+    </style>
+
+    <script>
+      function copyText(text, element) {
+        navigator.clipboard.writeText(text);
+        const originalText = element.innerText;
+        element.innerText = "Copied!";
+        setTimeout(() => {
+          element.innerText = originalText;
+        }, 1500);
+      }
+    </script>
 
 </body>
-</html>
 
+</html>
