@@ -43,38 +43,84 @@
   .container{max-width:860px;margin:0 auto;padding:0 24px;}
 
   /* ===== Nav ===== */
-  nav{position:sticky;top:0;z-index:50;background:rgba(250,249,245,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
-  .nav-inner{max-width:860px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
-  .brand{display:flex;align-items:center;gap:10px;}
-  .pill-mark{width:30px;height:30px;flex-shrink:0;}
-  .brand-name{font-family:'Sora',sans-serif;font-weight:700;font-size:15.5px;}
+  nav{
+    position:sticky;top:0;z-index:50;background:rgba(250,249,245,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+    transition: padding 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  nav.scrolled {
+    background: rgba(250,249,245,.95);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .nav-inner{
+    max-width:860px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+    transition: padding 0.3s ease;
+  }
+  nav.scrolled .nav-inner {
+    padding: 8px 24px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;transition:transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);}
+  .brand:hover{transform:scale(1.03);}
+  .pill-mark{
+    width:30px;height:30px;flex-shrink:0;
+    transition:transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s ease, height 0.3s ease;
+  }
+  nav.scrolled .pill-mark {
+    width: 24px;
+    height: 24px;
+  }
+  .brand:hover .pill-mark{transform:rotate(12deg);}
+  .brand-name{
+    font-family:'Sora',sans-serif;font-weight:700;font-size:15.5px;
+    transition: font-size 0.3s ease;
+  }
+  nav.scrolled .brand-name {
+    font-size: 14px;
+  }
   .nav-links{display:flex;gap:22px;font-size:13px;font-weight:500;color:var(--ink-soft);}
-  .nav-links a:hover{color:var(--emerald-deep);}
+  .nav-links a{transition:color 0.2s ease, transform 0.2s ease;display:inline-block;}
+  .nav-links a:hover{color:var(--emerald-deep);transform:translateY(-1px);}
 
   /* ===== Hero: full-bleed gradient ===== */
   .hero-band{
     background:linear-gradient(120deg,#0A6B54 0%, #0E8A6D 42%, #5347C9 100%);
     position:relative;overflow:hidden;padding:60px 0 46px;
   }
-  .hero-pills{position:absolute;top:-40px;right:-50px;width:380px;height:380px;opacity:.5;pointer-events:none;}
-  .hero-pills.two{top:auto;bottom:-90px;left:-90px;right:auto;width:280px;height:280px;opacity:.35;}
+  .hero-pills{
+    position:absolute;top:-40px;right:-50px;width:380px;height:380px;opacity:.5;pointer-events:none;
+    animation:floatPill1 8s ease-in-out infinite alternate;
+  }
+  .hero-pills.two{
+    top:auto;bottom:-90px;left:-90px;right:auto;width:280px;height:280px;opacity:.35;
+    animation:floatPill2 10s ease-in-out infinite alternate;
+  }
+  @keyframes floatPill1 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(-15px, 15px) rotate(5deg); }
+  }
+  @keyframes floatPill2 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(15px, -15px) rotate(-5deg); }
+  }
   .hero-eyebrow .capsule{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.25);}
   .hero-eyebrow .dot{background:#fff;animation:pulse 2.4s ease-in-out infinite;}
   @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
-  @media (prefers-reduced-motion:reduce){.hero-eyebrow .dot{animation:none;}}
+  @media (prefers-reduced-motion:reduce){
+    .hero-eyebrow .dot, .hero-pills, .hero-pills.two {animation:none;}
+  }
   .hero-band h1{
     margin-top:20px;color:#fff;font-size:clamp(30px,4.8vw,46px);font-weight:800;line-height:1.1;
     max-width:13ch;position:relative;z-index:1;
+    opacity:0;transform:translateY(12px);
+    animation:heroFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.1s;
   }
-  .hero-band p.lede{margin-top:14px;color:rgba(255,255,255,.86);font-size:16px;max-width:48ch;position:relative;z-index:1;}
-  .hero-meta{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1;}
-  .hero-meta .capsule{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.22);}
-
-  /* ===== Legend ===== */
-  .legend-band{background:var(--card);border-bottom:1px solid var(--line);}
-  .legend-row{display:flex;flex-wrap:wrap;gap:18px;padding:16px 0;}
-  .legend-item{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-soft);}
-  .legend-item .dot{width:8px;height:8px;}
+  .hero-band p.lede{
+    margin-top:14px;color:rgba(255,255,255,.86);font-size:16px;max-width:48ch;position:relative;z-index:1;
+    opacity:0;transform:translateY(12px);
+    animation:heroFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
+  }
+  @keyframes heroFade {
+    to { opacity: 1; transform: translateY(0); }
+  }
 
   /* ===== Section heads ===== */
   .section-head{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 18px;gap:10px;flex-wrap:wrap;}
@@ -82,168 +128,179 @@
   .section-head .count{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--sage);}
   section{padding:48px 0;}
 
-  /* ===== Builder note ===== */
-  .builder-note{
-    border:1.5px dashed var(--iris);background:var(--iris-tint);border-radius:14px;
-    padding:14px 18px;font-size:12.5px;color:var(--iris-deep);line-height:1.6;margin-bottom:22px;
+  /* ===== Action Button ===== */
+  .btn-copy {
+    display: block;
+    width: fit-content;
+    margin: 30px auto;
+    padding: 12px 50px;
+    background-color: var(--emerald);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: bold;
+    font-family: 'IBM Plex Mono', monospace;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
   }
-  .builder-note strong{color:var(--ink);}
-  .builder-note code{background:#fff;border:1px solid #E1DEFB;padding:1px 6px;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;}
-
-  /* ===== Posts ===== */
-  .post{
-    background:var(--card);border:1px solid var(--line);border-radius:16px;
-    padding:20px 22px;margin-bottom:14px;border-left:4px solid transparent;
-    opacity:0;transform:translateY(8px);animation:rise .5s ease forwards;
+  .btn-copy:hover {
+    background-color: var(--emerald-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px -6px rgba(14, 138, 109, 0.4);
   }
-  @keyframes rise{to{opacity:1;transform:translateY(0);}}
-  @media (prefers-reduced-motion:reduce){.post{animation:none;opacity:1;transform:none;}}
-  .post.type-update{border-left-color:var(--emerald);}
-  .post.type-urgent{border-left-color:var(--coral); background:linear-gradient(180deg,var(--coral-tint) 0%, #fff 60px);}
-  .post.type-event{border-left-color:var(--amber);}
-  .post-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
-  .post-tags{display:flex;gap:8px;align-items:center;}
-  .chip-update{background:var(--emerald-tint);color:var(--emerald-deep);}
-  .chip-update .dot{background:var(--emerald);}
-  .chip-urgent{background:var(--coral-tint);color:var(--coral-deep);}
-  .chip-urgent .dot{background:var(--coral);}
-  .chip-event{background:var(--amber-tint);color:var(--amber-deep);}
-  .chip-event .dot{background:var(--amber);}
-  .pin{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--sage);}
-  .post-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--sage);}
-  .post h3{font-size:16.5px;font-weight:700;margin-bottom:6px;}
-  .post p{font-size:14px;color:var(--ink-soft);margin:0;}
-
-  /* ===== Tip callout ===== */
-  .tip{
-    background:var(--amber-tint);border:1px solid #F3DFB2;border-radius:16px;
-    padding:18px 20px;display:flex;gap:14px;align-items:flex-start;margin-bottom:14px;
+  .btn-copy:active {
+    transform: translateY(0);
   }
-  .tip .icon{width:30px;height:30px;border-radius:9px;background:var(--amber);color:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:700;font-size:15px;}
-  .tip h3{font-size:14.5px;font-weight:700;margin-bottom:4px;}
-  .tip p{margin:0;font-size:13px;color:var(--ink-soft);}
 
-  /* ===== Resources band ===== */
-  .resources-band{background:linear-gradient(180deg,var(--iris-tint) 0%, var(--chalk) 100%);}
-  .link-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-  .link-card{
-    display:flex;flex-direction:column;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:16px;
-    padding:18px 20px;transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  footer{
+    background:var(--ink);color:rgba(255,255,255,.7);text-align:center;padding:26px 20px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;
   }
-  .link-card:hover{transform:translateY(-3px);border-color:var(--iris);box-shadow:0 10px 24px -14px rgba(123,110,246,.4);}
-  .link-card:focus-visible{outline:2px solid var(--iris);outline-offset:2px;}
-  .link-top{display:flex;align-items:center;justify-content:space-between;}
-  .link-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .link-icon.c-iris{background:var(--iris-tint);color:var(--iris-deep);}
-  .link-icon.c-emerald{background:var(--emerald-tint);color:var(--emerald-deep);}
-  .link-icon.c-amber{background:var(--amber-tint);color:var(--amber-deep);}
-  .link-icon svg{width:17px;height:17px;}
-  .link-arrow{color:var(--sage);transition:transform .18s ease, color .18s ease;}
-  .link-card:hover .link-arrow{transform:translate(2px,-2px);color:var(--iris-deep);}
-  .link-card .name{font-weight:700;font-size:14.5px;}
-  .link-card .desc{font-size:12.5px;color:var(--sage);}
-  .link-card .desc.placeholder{color:var(--coral-deep);font-family:'IBM Plex Mono',monospace;font-size:11px;}
-
-  footer{background:var(--ink);color:rgba(255,255,255,.7);text-align:center;padding:26px 20px;font-family:'IBM Plex Mono',monospace;font-size:11px;}
   footer strong{color:#fff;}
 
+  .contact-footer {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px 0 0;
+  }
+  .contact-footer span {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  }
+  .contact-footer span:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
+  .contact-footer span:active {
+    transform: translateY(0) scale(0.98);
+  }
+  .contact-footer span::after {
+    content: 'Copied!';
+    position: absolute;
+    bottom: 115%;
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    background: var(--emerald);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  .contact-footer span.copied::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
   @media(max-width:560px){
-    .link-grid{grid-template-columns:1fr;}
     .hero-pills{width:240px;height:240px;}
+    .contact-footer {
+      flex-direction: column;
+      gap: 10px;
+    }
   }
 </style>
 </head>
 <body>
 
-<!-- ================================================================
-     NAV — edit the text "Pharmacy Board" to rename your page.
+  <!-- ================================================================
+     NAV
 ================================================================= -->
-<nav>
-  <div class="nav-inner">
-    <a href="https://zurlt.github.io/PHR-F25/" class="brand" style="text-decoration: none; color: inherit;">
-      <svg class="pill-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="3" y="9" width="26" height="14" rx="7" fill="#0E8A6D"/>
-        <path d="M16 9H22C25.866 9 29 12.134 29 16C29 19.866 25.866 23 22 23H16V9Z" fill="#7B6EF6"/>
-      </svg>
-      <span class="brand-name">Pharmacy Board</span>
-    </a>
-    <div class="nav-links">
-      <a href="https://zurlt.github.io/PHR-F25/">Back to the Main Portal</a>
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="https://zurlt.github.io/PHR-F25/" class="brand">
+        <svg class="pill-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="9" width="26" height="14" rx="7" fill="#0E8A6D"/>
+          <path d="M16 9H22C25.866 9 29 12.134 29 16C29 19.866 25.866 23 22 23H16V9Z" fill="#7B6EF6"/>
+        </svg>
+        <span class="brand-name">Pharmacy Board</span>
+      </a>
+      <div class="nav-links">
+        <a href="https://zurlt.github.io/PHR-F25/">Back to the Main Portal</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================================================================
+     HERO
+================================================================= -->
+  <div class="band hero-band">
+    <svg class="hero-pills" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="170" y="10" width="130" height="54" rx="27" transform="rotate(28 170 10)" fill="#fff" opacity="0.18"/>
+      <rect x="140" y="120" width="150" height="58" rx="29" transform="rotate(-16 140 120)" fill="#fff" opacity="0.14"/>
+    </svg>
+    <svg class="hero-pills two" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="60" y="60" width="140" height="52" rx="26" transform="rotate(-30 60 60)" fill="#fff" opacity="0.16"/>
+    </svg>
+    <div class="container">
+      <div class="hero-eyebrow">
+        <h1>Template for the Flowchart</h1>
+        <p class="lede">If you want to customize your own template, click the button below the flowchart.</p>
+      </div>
     </div>
   </div>
-</nav>
 
-<!-- ================================================================
-     HERO — edit the headline, the sentence under it, and your name.
-================================================================= -->
-<div class="band hero-band">
-  <svg class="hero-pills" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="170" y="10" width="130" height="54" rx="27" transform="rotate(28 170 10)" fill="#fff" opacity="0.18"/>
-    <rect x="140" y="120" width="150" height="58" rx="29" transform="rotate(-16 140 120)" fill="#fff" opacity="0.14"/>
-  </svg>
-  <svg class="hero-pills two" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="60" y="60" width="140" height="52" rx="26" transform="rotate(-30 60 60)" fill="#fff" opacity="0.16"/>
-  </svg>
-  <div class="container">
-    <div class="hero-eyebrow">
-    <h1>Template for the Flowchart</h1>
-    <p class="lede">If you want to customize your own template, click the button below the flowchart.</p>
-    </div>
-  </div>
-</div>
-
-<section style="width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; padding: 20px 0;">
-  <h2 style="text-align: center;">Flowchart</h2>
-  <h4 style="text-align: center;">(Subject to change)</h4>
-  
-  <!-- Outer Box Container -->
-  <div style="width: 87%; height: 600px; margin: 0 auto; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; background: #fff; display: flex; justify-content: center; align-items: flex-start;">
+  <section style="width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; padding: 20px 0;">
+    <h2 style="text-align: center;">Flowchart</h2>
+    <h4 style="text-align: center; color: var(--sage); margin-top: 4px;">(Subject to change)</h4>
     
-    <!-- Centered Scaled Sheet -->
-    <iframe 
-      src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0Y-hGTv2xiPBmHPZcvcveICCzrorCgixdsP2RBAsEMKxVTo7kOLOsiD4gw__tcATt82vCqtt7zMkv/pubhtml?widget=false&amp;headers=false&amp;chrome=false&amp;rm=minimal" 
-      style="width: 147%; height: 900px; border: none; display: block; transform: scale(0.68); transform-origin: top center; flex-shrink: 0;"
-      allowfullscreen>
-    </iframe>
+    <!-- Outer Box Container -->
+    <div style="width: 87%; height: 600px; margin: 20px auto 0; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: #fff; display: flex; justify-content: center; align-items: flex-start; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+      
+      <!-- Centered Scaled Sheet -->
+      <iframe 
+        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0Y-hGTv2xiPBmHPZcvcveICCzrorCgixdsP2RBAsEMKxVTo7kOLOsiD4gw__tcATt82vCqtt7zMkv/pubhtml?widget=false&amp;headers=false&amp;chrome=false&amp;rm=minimal" 
+        style="width: 147%; height: 900px; border: none; display: block; transform: scale(0.68); transform-origin: top center; flex-shrink: 0;"
+        allowfullscreen>
+      </iframe>
 
-  </div>
-</section>
+    </div>
+  </section>
 
-<a href=https://docs.google.com/spreadsheets/u/1/d/1yffTQQZ4A0_NUvsZJcd-VZvct5oCKA7LnklSk1HCfLw/copy?gid=1665912952#gid=1665912952 style="display: block; width: fit-content; margin: 30px auto; padding: 12px 50px; background-color: #0b356b; color: #ffffff; text-decoration: none; border-radius: 20px; font-weight: bold; font-family: 'IBM Plex Mono', monospace; transition: background-color 0.2s ease; text-align: center;">
-  &larr; Make a Copy
-</a>
+  <a href="https://docs.google.com/spreadsheets/u/1/d/1yffTQQZ4A0_NUvsZJcd-VZvct5oCKA7LnklSk1HCfLw/copy?gid=1665912952#gid=1665912952" class="btn-copy">
+    &larr; Make a Copy
+  </a>
 
-
-<footer>Made for Pharmacy F25 Students - Questions must be directed to:
-<div class="contact-footer">
-    <span onclick="copyText('f251120@komar.edu.iq', this)"><strong>Email: F251120@KOMAR.EDU.IQ</strong></span>
-    <span onclick="copyText('+9647501123090', this)"><strong>Phone: +9647501123090</strong></span>
-  </div>
-
-  <style>
-    .contact-footer {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      padding: 20px;
-    }
-    .contact-footer span {
-      cursor: pointer;
-      user-select: none;
-    }
-  </style>
+  <footer>
+    Made for Pharmacy F25 Students - Questions must be directed to:
+    <div class="contact-footer">
+      <span onclick="copyText('f251120@komar.edu.iq', this)"><strong>Email: F251120@KOMAR.EDU.IQ</strong></span>
+      <span onclick="copyText('+9647501123090', this)"><strong>Phone: +9647501123090</strong></span>
+    </div>
+  </footer>
 
   <script>
+    // Shrink navbar on scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Copy footer text functionality
     function copyText(text, element) {
       navigator.clipboard.writeText(text);
-      const originalText = element.innerText;
-      element.innerText = "Copied!";
+      element.classList.add('copied');
       setTimeout(() => {
-        element.innerText = originalText;
+        element.classList.remove('copied');
       }, 1500);
     }
   </script>
 
 </body>
 </html>
-
