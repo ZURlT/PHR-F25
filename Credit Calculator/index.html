@@ -22,7 +22,6 @@
     --amber:#E8A33D;     --amber-deep:#8A5F17;    --amber-tint:#FDF1DD;
     --iris:#7B6EF6;      --iris-deep:#5347C9;     --iris-tint:#EFEDFE;
   }
-  *{box-sizing:border-box;}
   html{scroll-behavior:smooth;color-scheme:light;}
   body{
     margin:0;background:var(--chalk);color:var(--ink);
@@ -47,7 +46,7 @@
   /* ===== Nav ===== */
   nav{position:sticky;top:0;z-index:50;background:rgba(250,249,245,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:padding 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;}
   nav.scrolled{background:rgba(250,249,245,.95);box-shadow:0 4px 20px rgba(0,0,0,0.06);}
-  .nav-inner{max-width:860px;margin:0 auto;padding:14px 8px;display:flex;flex-wrap:nowrap;row-gap:6px;align-items:center;justify-content:space-between;gap:16px;transition:padding 0.3s ease;}
+  .nav-inner{max-width:860px;margin:0 auto;padding:14px 24px;display:flex;flex-wrap:wrap;row-gap:6px;align-items:center;justify-content:space-between;gap:16px;transition:padding 0.3s ease;}
   nav.scrolled .nav-inner{padding:8px 24px;}
   .brand{display:flex;align-items:center;gap:10px;flex-shrink:0;}
   .pill-mark{width:30px;height:30px;flex-shrink:0;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1), width 0.3s ease, height 0.3s ease;}
@@ -280,7 +279,7 @@
       <span class="brand-name">Pharmacy Board</span>
     </a>
     <div class="nav-links">
-      <a href="https://zurlt.github.io/PHR-F25/">Back to the Main Portal</a>
+      <a href="https://zurlt.github.io/PHR-F25/">Go Back</a>
     </div>
   </div>
 </nav>
