@@ -28,6 +28,7 @@
     --amber:#E8A33D;     --amber-deep:#8A5F17;    --amber-tint:#FDF1DD;
     --iris:#7B6EF6;      --iris-deep:#5347C9;     --iris-tint:#EFEDFE;
   }
+*{box-sizing:border-box;}
   html{scroll-behavior:smooth;color-scheme:light;}
   body{
     margin:0;background:var(--chalk);color:var(--ink);
@@ -635,22 +636,22 @@
 </script>
 
 
-  <footer>Made for Pharmacy F25 Students - Questions must be directed to:
-  <div class="contact-footer">
-      <span onclick="copyText('f251120@komar.edu.iq', this)"><strong>Email: F251120@KOMAR.EDU.IQ</strong></span>
-      <span onclick="copyText('+9647501123090', this)"><strong>Phone: +9647501123090</strong></span>
-    </div>
-  </footer>
+<footer>Made for Pharmacy F25 Students - Questions must be directed to:
+<div class="contact-footer">
+    <span onclick="copyText('f251120@komar.edu.iq', this)"><strong>Email: F251120@KOMAR.EDU.IQ</strong></span>
+    <span onclick="copyText('+9647501123090', this)"><strong>Phone: +9647501123090</strong></span>
+  </div>
+</footer>
 
-  <script>
-    function copyText(text, element) {
-      navigator.clipboard.writeText(text);
-      element.classList.add('copied');
-      setTimeout(() => {
-        element.classList.remove('copied');
-      }, 1500);
-    }
-  </script>
+<script>
+  function copyText(text, element) {
+    navigator.clipboard.writeText(text);
+    element.classList.add('copied');
+    setTimeout(() => {
+      element.classList.remove('copied');
+    }, 1500);
+  }
+</script>
 
 </body>
 </html>
